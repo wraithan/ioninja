@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Iron Oxide Ninja, Wraithan's dev blog">
+    <meta name="author" content="Wraithan">
+    
+    <title>{% block title %}Home{% endblock %} - Iron Oxide Ninja</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">    
+    <link href="/css/highlight/railscasts.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Iron Oxide Ninja</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/about/">About</a></li>
+                <li><a href="https://github.com/wraithan">GitHub</a></li>
+               </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container -->
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="page-header text-center">
+                {% block content-title %}
+                <h1>Iron Oxide Ninja</h1>
+                {% endblock %}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-8">
+              {% block content %}
+              <p>Page rendered incorrectly</p>
+              {% endblock %}
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  About
+                </div>
+                <div class="panel-body">
+                  This is Wraithan's dev blog, primarily focusing on rust development.
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Archives
+                </div>
+                <div class="panel-body">
+                  <ul class="list-unstyled">
+                    <li>
+                      <a href="#">June 2015</a>
+                    </li>
+                    <li>
+                      <a href="#">May 2015</a>
+                    </li>
+                    <li>
+                      <a href="#">April 2015</a>
+                    </li>
+                    <li>
+                      <a href="#">March 2015</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+			      <div class="col-lg-12 footer text-center">
+			        <p>©2015 Wraithan</p>
+			      </div>
+			    </div>
+
+		    </div>
+	    </div>
+
+    </div>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
