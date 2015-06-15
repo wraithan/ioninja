@@ -6,7 +6,8 @@
   "main": "build.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "gh-pages -d build/"
+    "build": "node ./build.js",
+    "deploy": "npm run build && gh-pages -d build/"
   },
   "repository": {
     "type": "git",

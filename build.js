@@ -39,6 +39,9 @@ Metalsmith(__dirname)
     .use(branch()
          .pattern('!posts/**.html')
          .pattern('!projects/**.html')
+         .use(branch('!index.md').use(permalinks({
+             relative: false
+         })))
          .use(templates({
              engine: 'swig',
              directory: 'templates',
