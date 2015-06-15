@@ -3,7 +3,7 @@ title: Using Build Scripts with Rust
 publishDate: 2015-06-14
 ---
 
-Last week I started into writing another [Warlight AI Challenge](http://aigames.com/competitions/warlight-ai-challenge-2) bot. I definitely wanted to write the bot in Rust since it was now 1.0 and it makes sense to get the competition runners to support it. I had already written one bot in Node but wanted to see what the static approach (especially with Rust's ownership model) would yield.
+Last week I started into writing another [Warlight AI Challenge](http://theaigames.com/competitions/warlight-ai-challenge-2) bot. I definitely wanted to write the bot in Rust since it was now 1.0 and it makes sense to get the competition runners to support it. I had already written one bot in Node but wanted to see what the static approach (especially with Rust's ownership model) would yield.
 
 I wanted to import the test harness that [Curious Attempt Bunny](http://curiousattemptbunny.com/) came up with when building his clojure bot. The [spec](https://github.com/curious-attempt-bunny/warlight2-starterbot-clojure#create-new-tests) for the tests is simple enough and it makes the tests portable across engines. This means I can import my tests from [ZenWarBot](https://github.com/wraithan/zenwarbot/tree/master/test/fodder) to bootstrap my new bot [rust-war-bot](https://github.com/wraithan/rust-war-bot). The first problem I ran into though was that there was no way to dynamically define tests for `cargo test` to pick up and run.
 
