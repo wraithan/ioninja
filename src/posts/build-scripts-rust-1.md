@@ -3,11 +3,11 @@ title: Using Build Scripts with Rust
 publishDate: 2015-06-14
 ---
 
-Last week I started into writing another [Warlight AI Challenge](http://aigames.com/competitions/warlight-ai-challenge-2) bot. I definitely wanted to writ the bot in Rust since it was now 1.0 and it makes sense to get the competition runners to support it. I had already written one bot in Node but wanted to see what the static approach (especially with Rust's ownership model) would yeild.
+Last week I started into writing another [Warlight AI Challenge](http://aigames.com/competitions/warlight-ai-challenge-2) bot. I definitely wanted to write the bot in Rust since it was now 1.0 and it makes sense to get the competition runners to support it. I had already written one bot in Node but wanted to see what the static approach (especially with Rust's ownership model) would yield.
 
-I wanted to import the test harness that [Curious Attempt Bunny](http://curiousattemptbunny.com/) came up with when building his clojure bot. The [spec](https://github.com/curious-attempt-bunny/warlight2-starterbot-clojure#create-new-tests) for the tests is simple enough and it makes the tests portable across engines. This means I can import my tests from [ZenWarBot](https://github.com/wraithan/zenwarbot/tree/master/test/fodder) to bootstrap my new bot [rust-war-bot](https://github.com/wraithan/rust-war-bot). The first problem I ran into though was that there was no way to dynamically define tests for `cargo test` to pick up and run.
+I wanted to import the test harness that [Curious Attempt Bunny](http://curiousattemptbunny.com/) came up with when building his Clojure bot. The [spec](https://github.com/curious-attempt-bunny/warlight2-starterbot-clojure#create-new-tests) for the tests is simple enough and it makes the tests portable across engines. This means I can import my tests from [ZenWarBot](https://github.com/wraithan/zenwarbot/tree/master/test/fodder) to bootstrap my new bot [rust-war-bot](https://github.com/wraithan/rust-war-bot). The first problem I ran into though was that there was no way to dynamically define tests for `cargo test` to pick up and run.
 
-I found my way over to [#rust on irc.mozilla.org](http://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust) and someone suggested the because the [docs for build scripts](http://doc.crates.io/build-script.html#case-study:-code-generation) mentioned dynamically generating code then importing it. This seemed like the ticket for me.
+I found my way over to [#rust on irc.mozilla.org](http://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust) and someone suggested that the [docs for build scripts](http://doc.crates.io/build-script.html#case-study:-code-generation) mentioned dynamically generating code, then importing it. This seemed like the ticket for me.
 
 I added `build = "build.rs"` to my Cargo.toml file and then opened `build.rs` up and pasted in the example code from the docs.
 
@@ -32,7 +32,7 @@ fn main() {
 }
 ```
 
-Note this is being built as an executable and therefore needs a `fn main()`. This loads in an environment variable that Cargo sets before running your build script. `OUT_DIR` as its name implies is where all build output should be placed. This `OUT_DIR` variable is also available to your application or library while it is being build as we'll see in their example:
+Note this is being built as an executable and therefore needs a `fn main()`. This loads in an environment variable that Cargo sets before running your build script. `OUT_DIR`, as its name implies, is where all build output should be placed. This `OUT_DIR` variable is also available to your application or library while it is being built as we'll see in their example:
 
 ``` rust
 // src/main.rs
@@ -91,7 +91,7 @@ And I wrote a `tests/runner.rs` to import those tests which consisted entirely o
 include!(concat!(env!("OUT_DIR"), "/tests.rs"));
 ```
 
-Then I ran `cargo test` and sure enough it created tests for each of the specs! Next part took a little thinking. I started to write out my test logic directly into my `build.rs` but that was tedious because it was in a string so I didn't have syntax highlighting, among other troubles. Also, I had considered reading in the contents of the specs in the `build.rs` then just injecting them as strings into the test. I decided took a little bit of time and rethought things and decided that instead of doing a bunch of work in `build.rs` I'll just have it call a function with the filename in the test!
+Then I ran `cargo test` and sure enough it created tests for each of the specs! The next part took a little thinking. I started to write out my test logic directly into my `build.rs` but that was tedious because it was in a string so I didn't have syntax highlighting, among other troubles. Also, I had considered reading in the contents of the specs in the `build.rs` then just injecting them as strings into the test. I decided took a little bit of time and rethought things and decided that instead of doing a bunch of work in `build.rs` I'll just have it call a function with the filename in the test!
 
 Next (and final) iteration of `build.rs` looks likes this:
 
@@ -151,5 +151,5 @@ fn run_file(name: &str) {
 
 ```
 
-And that's it! I now had a way to use another test spec format, create a test for each one, and then run those tests. All goals accomplished and is written in and using stable Rust and Cargo.
+And that's it! I now have a way to use another test spec format, create a test for each one, and then run those tests. All goals accomplished and it is written in stable Rust and Cargo.
 
