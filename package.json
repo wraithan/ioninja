@@ -5,7 +5,8 @@
   "description": "iron-oxide.ninja site",
   "main": "build.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d build/"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,8 @@
     "metalsmith-permalinks": "^0.4.0",
     "metalsmith-templates": "^0.7.0",
     "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.3.1"
   }
 }

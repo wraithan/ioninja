@@ -3,7 +3,7 @@ title: Using Build Scripts with Rust
 publishDate: 2015-06-14
 ---
 
-Last week I started into writing another [Warlight AI Challenge](http://aigames.com/competitions/warlight-ai-challenge-2) bot. I definitely wanted to writ the bot in Rust since it was now 1.0 and it makes sense to get the competition runners to support it. I had already written one bot in Node but wanted to see what the static approach (especially with Rust's ownership model) would yeild.
+Last week I started into writing another [Warlight AI Challenge](http://aigames.com/competitions/warlight-ai-challenge-2) bot. I definitely wanted to write the bot in Rust since it was now 1.0 and it makes sense to get the competition runners to support it. I had already written one bot in Node but wanted to see what the static approach (especially with Rust's ownership model) would yield.
 
 I wanted to import the test harness that [Curious Attempt Bunny](http://curiousattemptbunny.com/) came up with when building his clojure bot. The [spec](https://github.com/curious-attempt-bunny/warlight2-starterbot-clojure#create-new-tests) for the tests is simple enough and it makes the tests portable across engines. This means I can import my tests from [ZenWarBot](https://github.com/wraithan/zenwarbot/tree/master/test/fodder) to bootstrap my new bot [rust-war-bot](https://github.com/wraithan/rust-war-bot). The first problem I ran into though was that there was no way to dynamically define tests for `cargo test` to pick up and run.
 
@@ -50,7 +50,7 @@ My goal was to load in the names of all the files matching a pattern in a specif
 
 It turns out that if I'd read the whole page for build scripts instead of just the section that had directly what I wanted, I would have known that [`build-dependencies`](http://doc.crates.io/build-script.html#build-dependencies) was what I wanted. So adding it there totally worked and I was trucking along.
 
-I built out my `build.rs` to load in the filenames and write out tests like so:
+I built out my `build.rs` to load in the file names and write out tests like so:
 
 ``` rust
 // build.rs
@@ -81,7 +81,7 @@ fn main() {
 }
 ```
 
-So the `glob("tests/fodder/*.txt)` is pretty self explainatory. It returns a `Result<Paths, PatternError>`, I wanted my script to panic on error so I added `.unwrap()` because if that pattern fails, I want my build to fail. I iterate over the paths, grabbing the `file_stem` which is simply the portion of the filename before the extension. Then I convert it to a regular `str` from `OsStr` so it can be written to a file. Again, I'm just tossing `.unwrap()` on everything because I want this to crash on failure of any of these parts.
+So the `glob("tests/fodder/*.txt)` is pretty self explanatory. It returns a `Result<Paths, PatternError>`, I wanted my script to panic on error so I added `.unwrap()` because if that pattern fails, I want my build to fail. I iterate over the paths, grabbing the `file_stem` which is simply the portion of the file name before the extension. Then I convert it to a regular `str` from `OsStr` so it can be written to a file. Again, I'm just tossing `.unwrap()` on everything because I want this to crash on failure of any of these parts.
 
 And I wrote a `tests/runner.rs` to import those tests which consisted entirely of:
 
@@ -91,7 +91,7 @@ And I wrote a `tests/runner.rs` to import those tests which consisted entirely o
 include!(concat!(env!("OUT_DIR"), "/tests.rs"));
 ```
 
-Then I ran `cargo test` and sure enough it created tests for each of the specs! Next part took a little thinking. I started to write out my test logic directly into my `build.rs` but that was tedious because it was in a string so I didn't have syntax highlighting, among other troubles. Also, I had considered reading in the contents of the specs in the `build.rs` then just injecting them as strings into the test. I decided took a little bit of time and rethought things and decided that instead of doing a bunch of work in `build.rs` I'll just have it call a function with the filename in the test!
+Then I ran `cargo test` and sure enough it created tests for each of the specs! Next part took a little thinking. I started to write out my test logic directly into my `build.rs` but that was tedious because it was in a string so I didn't have syntax highlighting, among other troubles. Also, I had considered reading in the contents of the specs in the `build.rs` then just injecting them as strings into the test. I decided took a little bit of time and rethought things and decided that instead of doing a bunch of work in `build.rs` I'll just have it call a function with the file name in the test!
 
 Next (and final) iteration of `build.rs` looks likes this:
 
