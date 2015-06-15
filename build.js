@@ -9,12 +9,6 @@ var templates = require('metalsmith-templates')
 var metallic = require('metalsmith-metallic');
 
 Metalsmith(__dirname)
-    .metadata({
-        site: {
-            title: 'Iron Oxide Ninja',
-            url: 'http://iron-oxide.ninja'
-        }
-    })
     .source('./src')
     .destination('./build')
     .use(markdown())
@@ -27,7 +21,7 @@ Metalsmith(__dirname)
             reverse: true
         },
         projects: {
-            pattern: 'src/projects/**.md',
+            pattern: 'projects/**.html',
             sortBy: 'title'
         }
     }))
@@ -41,8 +35,15 @@ Metalsmith(__dirname)
              engine: 'swig',
              directory: 'templates',
              default: 'post.html'
-         }))
-        )
+         })))
+    .use(branch()
+         .pattern('!posts/**.html')
+         .pattern('!projects/**.html')
+         .use(templates({
+             engine: 'swig',
+             directory: 'templates',
+         })))
+
 
     .build(function buildComplete (err) {
         if (err) {

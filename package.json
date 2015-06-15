@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "name": "ioninja",
+  "version": "1.0.0",
+  "description": "iron-oxide.ninja site",
+  "main": "build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wraithan/ioninja.git"
+  },
+  "author": "Wraithan <xwraithanx@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wraithan/ioninja/issues"
+  },
+  "homepage": "https://github.com/wraithan/ioninja",
+  "dependencies": {
+    "metalsmith": "^1.7.0",
+    "metalsmith-branch": "0.0.4",
+    "metalsmith-collections": "^0.7.0",
+    "metalsmith-excerpts": "^1.0.0",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-metallic": "^0.3.1",
+    "metalsmith-permalinks": "^0.4.0",
+    "metalsmith-templates": "^0.7.0",
+    "swig": "^1.4.2"
+  }
+}

@@ -11,5 +11,10 @@
 {% endblock %}
 
 {% block content %}
+<p>This is an early draft of Wraithan's new blog... </p>
 
+{% for post in collections.posts %}
+<h3><a href="{{ post.path }}">{{ post.title }}</a></h3>
+<div>{{ post.excerpt | safe }} <a href="{{ post.path }}">Read more...</a></div>
+{% endfor %}
 {% endblock %}
